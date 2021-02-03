@@ -1,4 +1,4 @@
-Seconds,Throttled,Hits,Total,Percentage,DisableAge,DisableCount,Result
+Seconds,Throttled,Hits,Total,DisableThreshold,DisableAge,DisableCount,Result
 999,false,10,0,0.01,10000,25,false
 999,true,11,500,0.05,1000,10,false
 999,false,25,1000,0.05,10000,10,false
