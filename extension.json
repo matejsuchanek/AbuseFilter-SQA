@@ -267,9 +267,7 @@
 		"RenameUserSQL": "MediaWiki\\Extension\\AbuseFilter\\AbuseFilterHooks::onRenameUserSQL",
 		"UserMergeAccountFields": "MediaWiki\\Extension\\AbuseFilter\\AbuseFilterHooks::onUserMergeAccountFields",
 		"BeforeCreateEchoEvent": "MediaWiki\\Extension\\AbuseFilter\\AbuseFilterHooks::onBeforeCreateEchoEvent",
-		"ParserOutputStashForEdit": "MediaWiki\\Extension\\AbuseFilter\\AbuseFilterHooks::onParserOutputStashForEdit",
-		"UnitTestsAfterDatabaseSetup": "Tests",
-		"UnitTestsBeforeDatabaseTeardown": "Tests"
+		"ParserOutputStashForEdit": "MediaWiki\\Extension\\AbuseFilter\\AbuseFilterHooks::onParserOutputStashForEdit"
 	},
 	"ServiceWiringFiles": [
 		"includes/ServiceWiring.php"

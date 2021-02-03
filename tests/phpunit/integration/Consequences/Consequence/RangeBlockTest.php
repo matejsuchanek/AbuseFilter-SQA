@@ -4,12 +4,14 @@ namespace MediaWiki\Extension\AbuseFilter\Tests\Integration\Consequences\Consequ
 
 use MediaWiki\Block\BlockUser;
 use MediaWiki\Block\BlockUserFactory;
+use MediaWiki\Block\DatabaseBlock;
 use MediaWiki\Block\DatabaseBlockStore;
 use MediaWiki\Extension\AbuseFilter\AbuseFilterServices;
 use MediaWiki\Extension\AbuseFilter\Consequences\Consequence\RangeBlock;
 use MediaWiki\Extension\AbuseFilter\Consequences\Parameters;
 use MediaWiki\Extension\AbuseFilter\Filter\ExistingFilter;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserIdentityValue;
 use MediaWikiIntegrationTestCase;
@@ -124,6 +126,64 @@ class RangeBlockTest extends MediaWikiIntegrationTestCase {
 			$requestIP
 		);
 		$this->assertSame( $result, $rangeBlock->execute() );
+	}
+
+	public function testRevert() {
+		$filterUser = AbuseFilterServices::getFilterUser();
+		$block = new DatabaseBlock( [ 'expiry' => '1 day' ] );
+		$block->setTarget( '1.2.3.0/24' );
+		$block->setBlocker( $filterUser->getUser() );
+		MediaWikiServices::getInstance()->getDatabaseBlockStore()->insertBlock( $block );
+
+		$store = $this->createMock( DatabaseBlockStore::class );
+		$store->expects( $this->once() )
+			->method( 'deleteBlock' )
+			// FIXME ->with( $this->equalTo( $block ) )
+			->willReturn( true );
+
+		$rangeBlock = new RangeBlock(
+			$this->createMock( Parameters::class ),
+			'1 week',
+			$this->createMock( BlockUserFactory::class ),
+			$filterUser,
+			new MockMessageLocalizer(),
+			$store,
+			[ 'IPv4' => 16, 'IPv6' => 18 ],
+			self::CIDR_LIMIT,
+			'127.0.0.1'
+		);
+		$this->assertTrue(
+			$rangeBlock->revert(
+				[ 'ip' => '1.2.3.4' ],
+				self::getTestSysop()->getUser(),
+				'reason'
+			)
+		);
+		MediaWikiServices::getInstance()->getDatabaseBlockStore()->deleteBlock( $block );
+	}
+
+	public function testRevert_nothingToDo() {
+		$store = $this->createMock( DatabaseBlockStore::class );
+		$store->expects( $this->never() )->method( 'deleteBlock' );
+
+		$rangeBlock = new RangeBlock(
+			$this->createMock( Parameters::class ),
+			'1 week',
+			$this->createMock( BlockUserFactory::class ),
+			AbuseFilterServices::getFilterUser(),
+			new MockMessageLocalizer(),
+			$store,
+			[ 'IPv4' => 16, 'IPv6' => 18 ],
+			self::CIDR_LIMIT,
+			'127.0.0.1'
+		);
+		$this->assertFalse(
+			$rangeBlock->revert(
+				[ 'ip' => '1.2.3.4' ],
+				self::getTestSysop()->getUser(),
+				'reason'
+			)
+		);
 	}
 
 }

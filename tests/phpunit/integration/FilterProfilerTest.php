@@ -197,49 +197,23 @@ class FilterProfilerTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * @param int $condsUsed
-	 * @param float $time
-	 * @param bool $matches
-	 * @param array $expected
 	 * @covers ::recordStats
 	 * @covers ::getGroupProfile
-	 * @covers ::filterProfileGroupKey
-	 * @dataProvider provideRecordStats
+	 * @covers ::getGroupProfile
 	 */
-	public function testRecordStats( int $condsUsed, float $time, bool $matches, array $expected ) {
+	public function testRecordStats() {
 		$profiler = $this->getFilterProfiler();
-		$group = 'default';
-		$profiler->recordStats( $group, $condsUsed, $time, $matches );
-		$this->assertSame( $expected, $profiler->getGroupProfile( $group ) );
-	}
-
-	public function provideRecordStats() : array {
-		return [
-			'No overflow' => [
-				100,
-				333.3,
-				true,
-				[
-					'total' => 1,
-					'overflow' => 0,
-					'total-time' => 333.3,
-					'total-cond' => 100,
-					'matches' => 1
-				]
+		$profiler->recordStats( 'default', 100, 333.3, true );
+		$this->assertSame(
+			[
+				'total' => 1,
+				'overflow' => 0,
+				'total-time' => 333.3,
+				'total-cond' => 100,
+				'matches' => 1
 			],
-			'Overflow' => [
-				10000,
-				20,
-				true,
-				[
-					'total' => 1,
-					'overflow' => 1,
-					'total-time' => 20.0,
-					'total-cond' => 10000,
-					'matches' => 1
-				]
-			]
-		];
+			$profiler->getGroupProfile( 'default' )
+		);
 	}
 
 	/**

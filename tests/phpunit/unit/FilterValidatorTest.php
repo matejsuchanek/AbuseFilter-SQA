@@ -21,6 +21,8 @@ use User;
  */
 class FilterValidatorTest extends MediaWikiUnitTestCase {
 
+	private const RESTRICTED_ACTION = 'restricted';
+
 	private static function toBool( string $val ) : bool {
 		return $val === 'true';
 	}
@@ -65,7 +67,7 @@ class FilterValidatorTest extends MediaWikiUnitTestCase {
 		}
 
 		if ( $isRestr ) {
-			$actions['restricted'] = [];
+			$actions[self::RESTRICTED_ACTION] = [ 'foo' => 'bar' ];
 		}
 
 		return $actions;
@@ -109,7 +111,7 @@ class FilterValidatorTest extends MediaWikiUnitTestCase {
 			$this->getTagValidator(),
 			$this->getParserFactory(),
 			$this->getPermissionManager( $canRestricted ),
-			[ 'restricted' ]
+			[ self::RESTRICTED_ACTION ]
 		);
 		$status = $validator->checkAll(
 			$filterObj,
