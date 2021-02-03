@@ -7,7 +7,7 @@ Seconds,Throttled,Hits,Total,Percentage,DisableAge,DisableCount,Result
 999,true,101,1000,0.01,1000,25,false
 1000,true,10,500,0.05,10000,25,false
 1000,false,11,1000,0.01,1000,10,false
-1000,true,25,0,0.05,1000,25,false,true
+1000,true,25,0,0.05,1000,25,false
 1000,false,26,500,0.05,10000,10,true
 1000,true,100,1000,0.05,1000,25,false
 1000,false,101,0,0.05,10000,10,false

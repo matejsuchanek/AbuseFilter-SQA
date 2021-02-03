@@ -10,6 +10,7 @@ use MediaWiki\Extension\AbuseFilter\Parser\ParserStatus;
 /**
  * @coversDefaultClass \MediaWiki\Extension\AbuseFilter\Api\EvalExpression
  * @group medium
+ * @group API
  */
 class EvalExpressionTest extends ApiTestCase {
 

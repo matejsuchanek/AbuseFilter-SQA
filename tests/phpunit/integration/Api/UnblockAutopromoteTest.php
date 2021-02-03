@@ -11,6 +11,7 @@ use User;
 /**
  * @coversDefaultClass \MediaWiki\Extension\AbuseFilter\Api\UnblockAutopromote
  * @group medium
+ * @group API
  */
 class UnblockAutopromoteTest extends ApiTestCase {
 

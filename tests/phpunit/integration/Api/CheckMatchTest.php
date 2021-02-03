@@ -11,6 +11,7 @@ use MediaWiki\Extension\AbuseFilter\Parser\ParserStatus;
 /**
  * @coversDefaultClass \MediaWiki\Extension\AbuseFilter\Api\CheckMatch
  * @group medium
+ * @group API
  */
 class CheckMatchTest extends ApiTestCase {
 
@@ -65,11 +66,22 @@ class CheckMatchTest extends ApiTestCase {
 			->willReturn( $resultStatus );
 		$this->setService( ParserFactory::SERVICE_NAME, $this->getFactory( $parser ) );
 
-		$this->doApiRequest( [
+		$result = $this->doApiRequest( [
 			'action' => 'abusefiltercheckmatch',
 			'filter' => $filter,
 			'vars' => FormatJson::encode( [] ),
 		], null, null, self::getTestSysop()->getUser() );
+
+		$this->assertArrayEquals(
+			[
+				'abusefiltercheckmatch' => [
+					'result' => $expected
+				]
+			],
+			$result[0],
+			false,
+			true
+		);
 	}
 
 	/**

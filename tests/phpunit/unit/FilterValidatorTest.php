@@ -15,6 +15,10 @@ use MediaWikiUnitTestCase;
 use Status;
 use User;
 
+/**
+ * @coversDefaultClass \MediaWiki\Extension\AbuseFilter\FilterValidator
+ * @group Unit
+ */
 class FilterValidatorTest extends MediaWikiUnitTestCase {
 
 	private static function toBool( string $val ) : bool {

@@ -12,6 +12,7 @@ use MediaWikiUnitTestCase;
 /**
  * @coversDefaultClass \MediaWiki\Extension\AbuseFilter\Hooks\Handlers\AutoPromoteGroupsHandler
  * @covers ::__construct
+ * @group Unit
  */
 class AutoPromoteGroupsHandlerTest extends MediaWikiUnitTestCase {
 

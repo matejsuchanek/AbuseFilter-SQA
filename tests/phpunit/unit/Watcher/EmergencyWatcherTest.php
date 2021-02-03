@@ -15,6 +15,7 @@ use Wikimedia\Rdbms\ILoadBalancer;
 
 /**
  * @coversDefaultClass \MediaWiki\Extension\AbuseFilter\Watcher\EmergencyWatcher
+ * @group Unit
  */
 class EmergencyWatcherTest extends MediaWikiUnitTestCase {
 
