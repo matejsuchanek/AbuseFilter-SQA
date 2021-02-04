@@ -43,7 +43,7 @@ empty,valid,valid,true,true,false,default,true,false,false
 empty,valid,valid,false,false,true,no,true,false,false
 invalid,valid,valid,false,true,true,default,true,false,false
 empty,valid,valid,false,true,false,custom,false,true,false
-invalid,valid,valid,false,false,false,custom,false,true,false,false
+invalid,valid,valid,false,false,false,custom,false,true,false
 valid,valid,invalid,true,true,false,no,true,false,false
 valid,valid,both,true,false,true,no,false,true,false
 valid,valid,empty,true,false,true,default,false,true,false
